@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.util.AttributeSet;
@@ -23,7 +24,7 @@ import com.bzh.easycustomviewdemo.utils.Utils;
  * <b>修订历史</b>：　<br>
  * ========================================================== <br>
  */
-public class ShaderView extends View {
+public class ShaderView2 extends View {
     private static final String TAG = "ShaderView";
     private static final int RECT_SIZE = 400;// 矩形尺寸的一半
 
@@ -33,11 +34,11 @@ public class ShaderView extends View {
     private int screenX;
     private int screenY;
 
-    public ShaderView(Context context) {
+    public ShaderView2(Context context) {
         super(context);
     }
 
-    public ShaderView(Context context, AttributeSet attrs) {
+    public ShaderView2(Context context, AttributeSet attrs) {
         super(context, attrs);
         screenX = Utils.getScreenWidth(context) / 2;
         screenY = Utils.getScreenHeight(context) / 2;
@@ -51,21 +52,25 @@ public class ShaderView extends View {
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.a);
 
-        mPaint.setShader(new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
-//        mPaint.setShader(new LinearGradient(left,top,right,bottom, Color.RED,Color.YELLOW, Shader.TileMode.REPEAT));
-//        mPaint.setShader(new LinearGradient(left,top,right-RECT_SIZE,bottom-RECT_SIZE, Color.RED,Color.YELLOW, Shader.TileMode.REPEAT));
-//        mPaint.setShader(new LinearGradient(left, top, right, bottom, new int[]{Color.RED, Color.YELLOW, Color.GREEN, Color.CYAN, Color.BLUE}, new float[]{0, 0.1f, 0.5f, 0.7f, 0.8f}, Shader.TileMode.MIRROR));
-//        mPaint.setShader(new SweepGradient(screenX, screenY, Color.RED, Color.YELLOW));
+        final BitmapShader bitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+
+        Matrix matrix = new Matrix();
+
+        matrix.setTranslate(333, 333);
+
+        // 设置Shader的变换矩阵
+        bitmapShader.setLocalMatrix(matrix);
+
+        mPaint.setShader(bitmapShader);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-//        canvas.drawRect(left, top, right, bottom, mPaint);
-        canvas.drawRect(0, 0, screenX * 2, screenY * 2, mPaint);
+        canvas.drawRect(left, top, right, bottom, mPaint);
     }
 
-    public ShaderView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ShaderView2(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 }

@@ -4,7 +4,7 @@
                 android:layout_height="match_parent"
                 tools:context=".MainActivity">
 
-    <com.bzh.easycustomviewdemo.view_2_5.PolylineView
+    <com.bzh.easycustomviewdemo.view_1_2.LayerView2
         android:id="@+id/main_cv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

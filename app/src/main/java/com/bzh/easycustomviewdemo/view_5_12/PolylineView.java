@@ -1,4 +1,4 @@
-package com.bzh.easycustomviewdemo.view_2_5;
+package com.bzh.easycustomviewdemo.view_5_12;
 
 import android.content.Context;
 import android.graphics.Bitmap;

@@ -1,14 +1,20 @@
 package com.bzh.easycustomviewdemo;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 
+import com.bzh.easycustomviewdemo.page.PageTurnView;
 import com.bzh.easycustomviewdemo.view_1_12.CustomView;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
+    private PageTurnView mCustomView;
 
 //    private CustomView mCustomView;
 //    private int radiu;
@@ -26,8 +32,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        mCustomView = (CustomView) findViewById(R.id.main_cv);
+        mCustomView = (PageTurnView) findViewById(R.id.main_cv);
 
+        final ArrayList<Bitmap> bitmaps = new ArrayList<>();
+        bitmaps.add(BitmapFactory.decodeResource(getResources(), R.mipmap.a));
+        bitmaps.add(BitmapFactory.decodeResource(getResources(), R.mipmap.b));
+        bitmaps.add(BitmapFactory.decodeResource(getResources(), R.mipmap.c));
+        bitmaps.add(BitmapFactory.decodeResource(getResources(), R.mipmap.d));
+        mCustomView.setBitmaps(bitmaps);
 //        new Thread(mCustomView).start();
     }
 

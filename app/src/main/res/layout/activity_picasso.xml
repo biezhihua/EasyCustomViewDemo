@@ -4,10 +4,11 @@
                 android:layout_height="match_parent"
                 tools:context=".MainActivity">
 
-    <com.bzh.easycustomviewdemo.page.PageTurnView
+    <ImageView
         android:id="@+id/main_cv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="centerCrop"
         />
 
 </RelativeLayout>

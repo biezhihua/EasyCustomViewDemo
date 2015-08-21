@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="placeholder">#abcdef</color>
+    <color name="error">#00FF00</color>
+</resources>

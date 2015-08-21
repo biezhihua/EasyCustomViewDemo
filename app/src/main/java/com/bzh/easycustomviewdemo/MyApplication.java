@@ -3,6 +3,11 @@ package com.bzh.easycustomviewdemo;
 import android.app.Application;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
+import com.facebook.imagepipeline.listener.RequestListener;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * ========================================================== <br>
@@ -20,6 +25,8 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Fresco.initialize(this);
+        Set<RequestListener> listeners = new HashSet<>();
+        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this).setRequestListeners(listeners).build();
+        Fresco.initialize(this, config);
     }
 }

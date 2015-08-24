@@ -29,6 +29,16 @@ import android.util.TypedValue;
  */
 public class TextDrawable extends Drawable {
 
+
+    public static TextDrawable getDefaultTextDrawable(Context context, String text) {
+        TextDrawable defaultTextDrawable = new TextDrawable(context);
+        defaultTextDrawable.setTextSize(20);
+        defaultTextDrawable.setTextColor(Color.BLACK);
+        defaultTextDrawable.setText(text);
+        return defaultTextDrawable;
+    }
+
+
     /* Platform XML constants for typeface */
     private static final int SANS = 1;
     private static final int SERIF = 2;

@@ -49,6 +49,11 @@ public class MySimpleDraweeView extends SimpleDraweeView {
 
     private static final String TAG = "MySimpleDraweeView";
     private Context mContext;
+    private Postprocessor postprocessor;
+    private ControllerListener controllerListener;
+    private boolean isGif;
+    private boolean isAutoScreenShot = true;
+
 
     public MySimpleDraweeView(Context context, GenericDraweeHierarchy hierarchy) {
         super(context, hierarchy);
@@ -76,9 +81,13 @@ public class MySimpleDraweeView extends SimpleDraweeView {
         postprocessor = new MyBasePostProcessor();
     }
 
-    private Postprocessor postprocessor;
+    public void setIsAutoScreenShot(boolean isAutoScreenShot) {
+        this.isAutoScreenShot = isAutoScreenShot;
+    }
 
-    private ControllerListener controllerListener;
+    public void setIsGif() {
+        this.isGif = true;
+    }
 
     public ControllerListener getControllerListener() {
         return controllerListener;
@@ -113,31 +122,23 @@ public class MySimpleDraweeView extends SimpleDraweeView {
     }
 
     // ============
-    private static GenericDraweeHierarchy defaultGenericDraweeHierarchy = null;
-    private static GenericDraweeHierarchy roundGenericDraweeHierarchy = null;
 
     public static GenericDraweeHierarchy getGenericDraweeHierarchy(Context context) {
-        if (defaultGenericDraweeHierarchy == null) {
-            defaultGenericDraweeHierarchy = new GenericDraweeHierarchyBuilder(context.getResources())
-                    .setActualImageScaleType(ScalingUtils.ScaleType.CENTER_INSIDE)//fresco:actualImageScaleType="focusCrop"缩放类型
-                    .setRetryImage(TextDrawable.getDefaultTextDrawable(context, "点击重新加载!"))//fresco:retryImage="@drawable/retrying"点击重新加载
-                    .setFailureImage(TextDrawable.getDefaultTextDrawable(context, "加载失败!"))//fresco:failureImage="@drawable/error"失败图
-                    .setProgressBarImage(context.getResources().getDrawable(R.drawable.loading_white))//进度条fresco:progressBarImage="@drawable/progress_bar"进度条
-                    .build();
-        }
-        defaultGenericDraweeHierarchy.setPlaceholderImage(context.getResources().getDrawable(R.color.placeholder));//fresco:placeholderImage="@color/wait_color"占位图
-        return defaultGenericDraweeHierarchy;
+        return new GenericDraweeHierarchyBuilder(context.getResources())
+                .setActualImageScaleType(ScalingUtils.ScaleType.CENTER_INSIDE)//fresco:actualImageScaleType="focusCrop"缩放类型
+                .setRetryImage(TextDrawable.getDefaultTextDrawable(context, "点击重新加载!"))//fresco:retryImage="@drawable/retrying"点击重新加载
+                .setFailureImage(TextDrawable.getDefaultTextDrawable(context, "加载失败!"))//fresco:failureImage="@drawable/error"失败图
+                .setProgressBarImage(context.getResources().getDrawable(R.drawable.loading_white))//进度条fresco:progressBarImage="@drawable/progress_bar"进度条
+                .setPlaceholderImage(context.getResources().getDrawable(R.color.placeholder))//fresco:placeholderImage="@color/wait_color"占位图
+                .build();
     }
 
     public static GenericDraweeHierarchy getRoundGenericDraweeHierarchy(Context context) {
-        if (roundGenericDraweeHierarchy == null) {
-            roundGenericDraweeHierarchy = new GenericDraweeHierarchyBuilder(context.getResources())
-                    .setActualImageScaleType(ScalingUtils.ScaleType.CENTER_CROP)//fresco:actualImageScaleType="focusCrop"缩放类型
-                    .setPlaceholderImage(context.getResources().getDrawable(R.color.placeholder))//fresco:placeholderImage="@color/wait_color"占位图
-                    .setRoundingParams(RoundingParams.asCircle())//圆形/圆角fresco:roundAsCircle="true"圆形
-                    .build();
-        }
-        return roundGenericDraweeHierarchy;
+        return new GenericDraweeHierarchyBuilder(context.getResources())
+                .setActualImageScaleType(ScalingUtils.ScaleType.CENTER_CROP)//fresco:actualImageScaleType="focusCrop"缩放类型
+                .setPlaceholderImage(context.getResources().getDrawable(R.color.placeholder))//fresco:placeholderImage="@color/wait_color"占位图
+                .setRoundingParams(RoundingParams.asCircle())//圆形/圆角fresco:roundAsCircle="true"圆形
+                .build();
     }
 
     //图片显示
@@ -165,7 +166,9 @@ public class MySimpleDraweeView extends SimpleDraweeView {
 
         @Override
         public CloseableReference<Bitmap> process(Bitmap sourceBitmap, PlatformBitmapFactory bitmapFactory) {
-            if (sourceBitmap.getHeight() > (int) (sourceBitmap.getWidth() * 1.5F)) {
+            Log.d(TAG, String.format("sourceBitmap.width=%d, sourceBitmap.height=%d", sourceBitmap.getWidth(), sourceBitmap.getHeight()));
+
+            if (isAutoScreenShot && sourceBitmap.getHeight() > (int) (sourceBitmap.getWidth() * 1.5F)) {
                 Bitmap bitmap = decodeRegion(sourceBitmap, sourceBitmap.getWidth(), (int) (sourceBitmap.getWidth() * 1.5F));
                 return super.process(bitmap, bitmapFactory);
             } else {
@@ -191,10 +194,12 @@ public class MySimpleDraweeView extends SimpleDraweeView {
         @Override
         public void process(Bitmap bitmap) {
             super.process(bitmap);
-            final Drawable drawable = mContext.getResources().getDrawable(R.drawable.gif_icon);
-            final Bitmap temp = ((BitmapDrawable) drawable).getBitmap();
-            Canvas canvas = new Canvas(bitmap);
-            canvas.drawBitmap(bitmap, bitmap.getWidth() - drawable.getIntrinsicWidth() - 6, bitmap.getHeight() - drawable.getIntrinsicHeight() - 6, new Paint());
+            if (isGif) {
+                final Drawable drawable = mContext.getResources().getDrawable(R.drawable.gif_icon);
+                final Bitmap temp = ((BitmapDrawable) drawable).getBitmap();
+                Canvas canvas = new Canvas(bitmap);
+                canvas.drawBitmap(temp, bitmap.getWidth() - drawable.getIntrinsicWidth() - 6, bitmap.getHeight() - drawable.getIntrinsicHeight() - 6, new Paint());
+            }
         }
     }
 
@@ -209,7 +214,7 @@ public class MySimpleDraweeView extends SimpleDraweeView {
         Rect rect = new Rect(0, 0, width, height);
         long endTime = System.currentTimeMillis();
         Bitmap copy = bitmapRegionDecoder.decodeRegion(rect, null).copy(Bitmap.Config.ARGB_8888, true);
-        Log.d(TAG, String.format("截取[width=%d,height=%d],耗费：%ds", width, height, (endTime - startTime)));
+        Log.d(TAG, String.format("截取[width=%d,height=%d],耗费：%ds", width, height, (endTime - startTime)).toString());
         return copy;
     }
 
@@ -221,7 +226,7 @@ public class MySimpleDraweeView extends SimpleDraweeView {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
         long endTime = System.currentTimeMillis();
-        Log.d(TAG, String.format("bitmap.width=%d,bitmap.height=%d,bitmap.getcount=%d", bitmap.getWidth(), bitmap.getHeight(), bitmap.getByteCount()));
+        Log.d(TAG, String.format("bitmap.width=%d,bitmap.height=%d,bitmap.getcount=%d", bitmap.getWidth(), bitmap.getHeight(), bitmap.getByteCount()).toString());
         Log.d(TAG, "Bitmap转换byte[]，耗费:" + (endTime - startTime) + "s");
         return baos.toByteArray();
     }

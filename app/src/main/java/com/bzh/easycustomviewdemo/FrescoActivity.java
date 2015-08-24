@@ -21,6 +21,7 @@ public class FrescoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fresco);
 
         draweeView = (MySimpleDraweeView) findViewById(R.id.main_cv);
+        draweeView.setIsGif();
         draweeView.setHierarchy();
         draweeView.setController(url4);
     }

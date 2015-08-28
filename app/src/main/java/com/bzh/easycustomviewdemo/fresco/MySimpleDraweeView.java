@@ -128,7 +128,7 @@ public class MySimpleDraweeView extends SimpleDraweeView {
                 .setActualImageScaleType(ScalingUtils.ScaleType.CENTER_INSIDE)//fresco:actualImageScaleType="focusCrop"缩放类型
                 .setRetryImage(TextDrawable.getDefaultTextDrawable(context, "点击重新加载!"))//fresco:retryImage="@drawable/retrying"点击重新加载
                 .setFailureImage(TextDrawable.getDefaultTextDrawable(context, "加载失败!"))//fresco:failureImage="@drawable/error"失败图
-                .setProgressBarImage(context.getResources().getDrawable(R.drawable.loading_white))//进度条fresco:progressBarImage="@drawable/progress_bar"进度条
+//                .setProgressBarImage(context.getResources().getDrawable(R.drawable.loading_white))//进度条fresco:progressBarImage="@drawable/progress_bar"进度条
                 .setPlaceholderImage(context.getResources().getDrawable(R.color.placeholder))//fresco:placeholderImage="@color/wait_color"占位图
                 .build();
     }
@@ -195,10 +195,10 @@ public class MySimpleDraweeView extends SimpleDraweeView {
         public void process(Bitmap bitmap) {
             super.process(bitmap);
             if (isGif) {
-                final Drawable drawable = mContext.getResources().getDrawable(R.drawable.gif_icon);
-                final Bitmap temp = ((BitmapDrawable) drawable).getBitmap();
-                Canvas canvas = new Canvas(bitmap);
-                canvas.drawBitmap(temp, bitmap.getWidth() - drawable.getIntrinsicWidth() - 6, bitmap.getHeight() - drawable.getIntrinsicHeight() - 6, new Paint());
+//                final Drawable drawable = mContext.getResources().getDrawable(R.drawable.gif_icon);
+//                final Bitmap temp = ((BitmapDrawable) drawable).getBitmap();
+//                Canvas canvas = new Canvas(bitmap);
+//                canvas.drawBitmap(temp, bitmap.getWidth() - drawable.getIntrinsicWidth() - 6, bitmap.getHeight() - drawable.getIntrinsicHeight() - 6, new Paint());
             }
         }
     }

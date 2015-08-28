@@ -5,21 +5,59 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.bzh.easycustomviewdemo.view_7_12.ImgView
-        android:id="@+id/main_cv"
+    <com.bzh.easycustomviewdemo.view_2_3.SquareLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="20dp" />
-
-
-    <Button
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="AigeStudio" />
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:background="#679135"
+        android:paddingBottom="20dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="7dp"
+        android:paddingTop="12dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="AigeStudio" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#125793"
+            android:text="tomorrow"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:typeface="serif" />
+
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            android:background="#495287"
+            android:text="AigeStudio" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:background="#976234"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bzh1" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#594342"
+            android:text="AigeStudio" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#961315"
+            android:text="AigeStudio" />
+
+    </com.bzh.easycustomviewdemo.view_2_3.SquareLayout>
 
 </LinearLayout>

@@ -17,6 +17,7 @@ import android.widget.ImageView;
 
 import com.bzh.easycustomviewdemo.page.PageTurnView;
 import com.bzh.easycustomviewdemo.utils.Utils;
+import com.bzh.easycustomviewdemo.view_7_12.ImgView;
 import com.facebook.common.references.CloseableReference;
 import com.facebook.datasource.DataSource;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -34,12 +35,21 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import java.io.ByteArrayOutputStream;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    @Bind(R.id.main_cv)
+    ImgView imgView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.a);
+        imgView.setmBitmap(bitmap);
     }
 }

@@ -1,39 +1,18 @@
 package com.bzh.easycustomviewdemo;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.BitmapRegionDecoder;
-import android.graphics.Canvas;
-import android.graphics.Picture;
-import android.graphics.Rect;
-import android.graphics.drawable.Animatable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.webkit.WebView;
 import android.widget.ImageView;
 
-import com.bzh.easycustomviewdemo.page.PageTurnView;
-import com.bzh.easycustomviewdemo.utils.Utils;
 import com.bzh.easycustomviewdemo.view_7_12.ImgView;
-import com.facebook.common.references.CloseableReference;
-import com.facebook.datasource.DataSource;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.view.DraweeHolder;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.core.ImagePipeline;
-import com.facebook.imagepipeline.image.CloseableImage;
-import com.facebook.imagepipeline.image.CloseableStaticBitmap;
-import com.facebook.imagepipeline.image.ImageInfo;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
-import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,13 +20,53 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.main_cv)
-    ImgView imgView;
+    ImageView imgView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_toolbar);
 
+
+//        imgView = (ImageView) findViewById(R.id.image);
+//        OkHttpClient okHttpClient = new OkHttpClient();
+//
+//        Request.Builder builder = new Request.Builder();
+//        builder.url("http://b.hiphotos.baidu.com/image/pic/item/bd3eb13533fa828ba79b0330f91f4134960a5aac.jpg");
+//        Request request = builder.build();
+//
+//        Call call = okHttpClient.newCall(request);
+//
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Request request, IOException e) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(Response response) throws IOException {
+//
+//            }
+//        });
+//        FormEncodingBuilder builder1 = new FormEncodingBuilder();
+//        builder1.add("username", "张鸿洋");
+//        request = new Request.Builder().url("").post(builder1.build()).build();
+//        okHttpClient.newCall(request).equals(new Callback() {
+//            @Override
+//            public void onFailure(Request request, IOException e) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(Response response) throws IOException {
+//
+//            }
+//        });
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        System.out.println(imgView.getMeasuredWidth() + "----" + imgView.getMeasuredHeight());
+//    }
 }
